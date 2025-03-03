@@ -9,6 +9,7 @@ import { SearchBar } from "./Components/SearchBar"
 import { LoadingSpinner } from "./Components/LoadingSpinner"
 import { ForecastCard } from "./Components/ForecastCard"
 import { WeatherCard } from "./Components/WeatherCard"
+import { TemperatureToggle } from "./Components/TemperatureToggle"
 // import { WeatherCard } from "./components/WeatherCard"
 // import { ForecastCard } from "./components/ForecastCard"
 // import { TemperatureToggle } from "./components/TemperatureToggle"
@@ -110,7 +111,7 @@ export default function WeatherApp() {
         <div className="flex flex-col gap-8">
           <div className="flex flex-col sm:flex-row items-center gap-4">
             <SearchBar value={searchQuery} onChange={setSearchQuery} onSubmit={handleSearch} />
-            {/* <TemperatureToggle unit={unit} onToggle={() => setUnit(unit === "celsius" ? "fahrenheit" : "celsius")} /> */}
+            <TemperatureToggle unit={unit} onToggle={() => setUnit(unit === "celsius" ? "fahrenheit" : "celsius")} />
           </div>
 
           {loading && <LoadingSpinner />}
