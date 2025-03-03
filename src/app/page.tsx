@@ -10,6 +10,7 @@ import { LoadingSpinner } from "./Components/LoadingSpinner"
 import { ForecastCard } from "./Components/ForecastCard"
 import { WeatherCard } from "./Components/WeatherCard"
 import { TemperatureToggle } from "./Components/TemperatureToggle"
+import { Footer } from "./Components/Footer"
 // import { WeatherCard } from "./components/WeatherCard"
 // import { ForecastCard } from "./components/ForecastCard"
 // import { TemperatureToggle } from "./components/TemperatureToggle"
@@ -124,7 +125,7 @@ export default function WeatherApp() {
           )}
         </div>
       </main>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   )
 }
