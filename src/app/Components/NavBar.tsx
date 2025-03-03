@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 export function NavBar() {
 
   return (
-    <header className="w-full py-4 px-6 backdrop-blur-sm bg-white/50 dark:bg-gray-900/50 fixed top-0 z-50">
+    <header className="w-full py-4 px-6 backdrop-blur-sm dark:bg-gray-900/50 fixed top-0 z-50">
       <div className="container max-w-6xl mx-auto flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Cloud className="h-8 w-8 text-blue-500 dark:text-blue-400" />
