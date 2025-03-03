@@ -7,6 +7,8 @@ import { NavBar } from "./Components/NavBar"
 import { Hero } from "./Components/Hero"
 import { SearchBar } from "./Components/SearchBar"
 import { LoadingSpinner } from "./Components/LoadingSpinner"
+import { ForecastCard } from "./Components/ForecastCard"
+import { WeatherCard } from "./Components/WeatherCard"
 // import { WeatherCard } from "./components/WeatherCard"
 // import { ForecastCard } from "./components/ForecastCard"
 // import { TemperatureToggle } from "./components/TemperatureToggle"
@@ -115,8 +117,8 @@ export default function WeatherApp() {
 
           {weather && !loading && !error && (
             <div className="space-y-6">
-              {/* <WeatherCard weather={weather} unit={unit} />
-              <ForecastCard forecast={forecast} unit={unit} /> */}
+              <WeatherCard weather={weather} unit={unit} />
+              <ForecastCard forecast={forecast} unit={unit} />
             </div>
           )}
         </div>
