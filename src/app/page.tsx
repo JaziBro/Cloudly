@@ -1,7 +1,5 @@
 "use client";
 
-import Head from "next/head";
-import Image from "next/image";
 import axios from "axios";
 import { useState } from "react";
 import { WeatherCard } from "./Components/WeatherCard";
@@ -12,6 +10,7 @@ import { SearchBar } from "./Components/SearchBar";
 import { TemperatureToggle } from "./Components/TemperatureToggle";
 import { Footer } from "./Components/Footer";
 import ForecastCard from "./Components/ForecastCard";
+import { ErrorMessage } from "./Components/ErrorMessage";
 
 interface WeatherData {
   city: string;
@@ -27,8 +26,8 @@ interface WeatherData {
 
 export default function Home() {
   const [city, setCity] = useState("");
-  const [selectedCity, setSelectedCity] = useState(""); // NEW state for forecast
   const [weather, setWeather] = useState<WeatherData | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [unit, setUnit] = useState<"celsius" | "fahrenheit">("celsius");
 
@@ -37,6 +36,8 @@ export default function Home() {
     if (!city.trim()) return;
 
     setLoading(true);
+    setError(null);
+    setWeather(null); // Clear previous results on new search
     try {
       const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}`;
       const response = await axios.get(url);
@@ -55,45 +56,39 @@ export default function Home() {
       };
 
       setWeather(transformedWeather);
-      setSelectedCity(city); // Keep the city for forecast
-    } catch (error) {
-      console.error("Error fetching weather data:", error);
+    } catch (error: any) {
+      if (error.response && error.response.status === 404) {
+        setError("City not found! Please check the spelling and try again.");
+      } else {
+        setError("An error occurred while fetching data. Please try again.");
+      }
     } finally {
       setLoading(false);
     }
-    setCity(""); // Clear input field
+    setCity("");
   };
 
   if (loading) {
     return <LoadingSpinner />;
-  } else {
-    return (
-      <div>
-        <NavBar />
-        <main className="flex-1 container max-w-6xl mx-auto px-4 py-8">
-          <Hero />
-          <div className="flex flex-col gap-8">
-            <div className="flex flex-col sm:flex-row items-center gap-4">
-              <SearchBar
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-                onSubmit={fetchWeather}
-              />
-              <TemperatureToggle
-                unit={unit}
-                onToggle={() =>
-                  setUnit(unit === "celsius" ? "fahrenheit" : "celsius")
-                }
-              />
-            </div>
-            <div className="space-y-6">
-              {weather && <WeatherCard weather={weather} unit={unit} />}
-              {selectedCity && <ForecastCard city={selectedCity} unit={unit} />}
-            </div>
-          </div>
-        </main>
-        <Footer />
-      </div>
-    );
   }
+
+  return (
+    <div>
+      <NavBar />
+      <Hero />
+      <SearchBar
+        value={city}
+        onChange={(e) => setCity(e.target.value)}
+        onSubmit={fetchWeather}
+      />
+      {error && <ErrorMessage message={error} />}
+      {weather && <WeatherCard weather={weather} unit={unit} />}
+      {weather && <ForecastCard city={weather.city} unit={unit} />}
+      <TemperatureToggle
+        unit={unit}
+        onToggle={() => setUnit(unit === "celsius" ? "fahrenheit" : "celsius")}
+      />
+      <Footer />
+    </div>
+  );
 }
