@@ -70,23 +70,28 @@ export default function Home() {
     return (
       <div>
         <NavBar />
-        <Hero />
-        <div className="flex justify-center items-center">
-          <SearchBar
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-            onSubmit={fetchWeather}
-          />
-          <TemperatureToggle
-            unit={unit}
-            onToggle={() =>
-              setUnit(unit === "celsius" ? "fahrenheit" : "celsius")
-            }           
-          />
-        </div>
-        
-        {weather && <WeatherCard weather={weather} unit={unit} />}
-        {selectedCity && <ForecastCard city={selectedCity} unit={unit} />} {/* Use selectedCity */}
+        <main className="flex-1 container max-w-6xl mx-auto px-4 py-8">
+          <Hero />
+          <div className="flex flex-col gap-8">
+            <div className="flex flex-col sm:flex-row items-center gap-4">
+              <SearchBar
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                onSubmit={fetchWeather}
+              />
+              <TemperatureToggle
+                unit={unit}
+                onToggle={() =>
+                  setUnit(unit === "celsius" ? "fahrenheit" : "celsius")
+                }
+              />
+            </div>
+            <div className="space-y-6">
+              {weather && <WeatherCard weather={weather} unit={unit} />}
+              {selectedCity && <ForecastCard city={selectedCity} unit={unit} />}
+            </div>
+          </div>
+        </main>
         <Footer />
       </div>
     );
