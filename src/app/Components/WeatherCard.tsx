@@ -1,4 +1,15 @@
-import { Cloud, Sun, CloudRain, Wind, Droplets, Sunrise, Sunset } from "lucide-react"
+import {
+  Cloud,
+  Sun,
+  CloudRain,
+  Wind,
+  Droplets,
+  Sunrise,
+  Sunset,
+  CloudSnow,
+  CloudFog,
+  CloudLightning,
+} from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 interface WeatherCardProps {
@@ -20,11 +31,21 @@ export function WeatherCard({ weather, unit }: WeatherCardProps) {
   const getWeatherIcon = () => {
     switch (weather.condition.toLowerCase()) {
       case "sunny":
+      case "clear":
         return <Sun className="h-16 w-16 text-yellow-500" />
       case "cloudy":
+      case "clouds":
         return <Cloud className="h-16 w-16 text-gray-500" />
       case "rainy":
+      case "rain":
         return <CloudRain className="h-16 w-16 text-blue-500" />
+      case "snow":
+        return <CloudSnow className="h-16 w-16 text-blue-200" />
+      case "fog":
+      case "mist":
+        return <CloudFog className="h-16 w-16 text-gray-400" />
+      case "thunderstorm":
+        return <CloudLightning className="h-16 w-16 text-purple-500" />
       default:
         return <Cloud className="h-16 w-16 text-blue-500" />
     }
@@ -34,11 +55,11 @@ export function WeatherCard({ weather, unit }: WeatherCardProps) {
     if (unit === "fahrenheit") {
       return `${Math.round((temp * 9) / 5 + 32)}°F`
     }
-    return `${temp}°C`
+    return `${Math.round(temp)}°C`
   }
 
   return (
-    <Card className="w-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-shadow">
+    <Card className="w-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-shadow mt-10">
       <CardHeader>
         <CardTitle className="text-2xl flex items-center justify-between">
           <span>
