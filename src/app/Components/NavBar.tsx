@@ -12,7 +12,7 @@ export function NavBar() {
   const darkLogo = "/dark-logo.png" // Replace with your actual dark mode logo path
 
   return (
-    <header className="w-full py-4 px-6 fixed backdrop-blur-sm top-0 z-50">
+    <header className="w-full py-2 px-6 fixed backdrop-blur-sm top-0 z-50">
       <div className="container max-w-6xl mx-auto flex items-center justify-between">
         {/* Placeholder for logo - switches based on theme */}
         <div className="">
@@ -20,8 +20,8 @@ export function NavBar() {
             src={theme === "dark" ? darkLogo : lightLogo}
             alt="Site Logo"
             className="object-contain"
-            width={96}
-            height={96}
+            width={100}
+            height={100}
           />
         </div>
 

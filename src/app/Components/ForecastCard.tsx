@@ -31,6 +31,7 @@ const ForecastCard: React.FC<ForecastCardProps> = ({ city, unit }) => {
       try {
         const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}`
         const response = await axios.get(url)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const data = response.data.list.slice(0, 5).map((item: any, index: number) => ({
           date: new Date(item.dt * 1000).toLocaleDateString(),
           temperature: item.main.temp,

@@ -1,5 +1,3 @@
-"use client";
-
 import axios from "axios";
 import { useState } from "react";
 import { WeatherCard } from "./Components/WeatherCard";
@@ -56,11 +54,15 @@ export default function Home() {
   
       setWeather(transformedWeather);
       setSelectedCity(city);
-    } catch (error: any) {
-      if (error.response && error.response.status === 404) {
-        toast("City not found, Please check the spelling and try again");
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        if (error.response && error.response.status === 404) {
+          toast("City not found, Please check the spelling and try again");
+        } else {
+          toast("Oops! Something went wrong, Please try again");
+        }
       } else {
-        toast("Oops! Something went wrong, Please try again");
+        toast("An unexpected error occurred");
       }
     } finally {
       setLoading(false);
