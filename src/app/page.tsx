@@ -10,6 +10,8 @@ import { SearchBar } from "./Components/SearchBar";
 import { TemperatureToggle } from "./Components/TemperatureToggle";
 import { Footer } from "./Components/Footer";
 import ForecastCard from "./Components/ForecastCard";
+import { toast } from "sonner"
+
 
 interface WeatherData {
   city: string;
@@ -33,12 +35,12 @@ export default function Home() {
   const fetchWeather = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!city.trim()) return;
-
+  
     setLoading(true);
     try {
       const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}`;
       const response = await axios.get(url);
-
+  
       const data = response.data;
       const transformedWeather: WeatherData = {
         city: data.name,
@@ -51,16 +53,21 @@ export default function Home() {
         sunset: new Date(data.sys.sunset * 1000).toLocaleTimeString(),
         feelsLike: data.main.feels_like,
       };
-
+  
       setWeather(transformedWeather);
-      setSelectedCity(city); // Keep the city for forecast
-    } catch (error) {
-      console.error("Error fetching weather data:", error);
+      setSelectedCity(city);
+    } catch (error: any) {
+      if (error.response && error.response.status === 404) {
+        toast("City not found, Please check the spelling and try again");
+      } else {
+        toast("Oops! Something went wrong, Please try again");
+      }
     } finally {
       setLoading(false);
     }
-    setCity(""); // Clear input field
+    setCity("");
   };
+  
 
   if (loading) {
     return <LoadingSpinner />;

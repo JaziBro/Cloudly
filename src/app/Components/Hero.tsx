@@ -14,7 +14,7 @@ const montserrat = Montserrat({
 
 export function Hero() {
   return (
-    <section className="pt-24 pb-12 text-center">
+    <section className="pt-24 pb-12 text-center mt-6">
       <div className="container max-w-6xl mx-auto px-4">
         <div className="flex flex-col items-center gap-6">
           <div className="relative">
